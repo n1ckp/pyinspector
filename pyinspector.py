@@ -37,7 +37,7 @@ DEFAULT_VARS = set(('__builtins__', '__doc__', '__name__', '__package__'))
 MAX_STEPS = 500
 
 class PyInspector(bdb.Bdb):
-    def __init__(self, code_str_in, extra_line_data, test_data):
+    def __init__(self, code_str_in, extra_line_data={}, test_data={"tests":[],"func_name":None}):
         bdb.Bdb.__init__(self)
         # Additional line data such as expression trees (only able to get from
         # AST parser library)
