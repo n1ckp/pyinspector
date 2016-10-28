@@ -36,7 +36,7 @@ DEFAULT_VARS = set(('__builtins__', '__doc__', '__name__', '__package__'))
 # Threshold to prevent infinite loops
 MAX_STEPS = 500
 
-class CA_DbgTester(bdb.Bdb):
+class PyInspector(bdb.Bdb):
     def __init__(self, code_str_in, extra_line_data, test_data):
         bdb.Bdb.__init__(self)
         # Additional line data such as expression trees (only able to get from
@@ -118,7 +118,7 @@ class CA_DbgTester(bdb.Bdb):
             sys.stdout = sys.__stdout__
             traceback.print_exc()
             self.add_error(str(e), self.lineno, 0, self.lineno, 999)
-            print("Error in CA_DbgTester base code: " + str(e))
+            print("Error in PyInspector base code: " + str(e))
 
         self.code_output = mystdout.getvalue()
 
@@ -679,7 +679,7 @@ def test(filepath):
             "tests": [],
             "func_name": None,
             }
-    dbg = CA_DbgTester(code_str, extra_l_d, test_d)
+    dbg = PyInspector(code_str, extra_l_d, test_d)
     trace_history, exec_steps, code_output, time_taken = dbg.get_trace_vals()
     print("=========== Variable Trace History ===========")
     for key, val in trace_history.iteritems():
